@@ -81,6 +81,25 @@ public class MyArrayList<E> implements Serializable {
         }
     }
 
+    public void delete(int i) {
+        final int ARR_OLD_LENGTH = this.arr.length;
+
+        if ((i == ARR_OLD_LENGTH - 1 || i < ARR_OLD_LENGTH - 1) && i >= 0) {
+            E[] arrLeftPart = Arrays.copyOfRange(this.arr, 0, i);
+            E[] arrRightPart = Arrays.copyOfRange(this.arr, i + 1, ARR_OLD_LENGTH);
+            E[] result = Arrays.copyOf(arrLeftPart, arrLeftPart.length + arrRightPart.length);
+
+            System.arraycopy(arrRightPart, 0, result, i, arrRightPart.length);
+            this.arr = result;
+        } else if (i < 0) {
+            System.out.println("You can't use negative numbers as an index.");
+        } else if (i >= ARR_OLD_LENGTH) {
+            System.out.println("You can't delete the element because that arr doesn't have that index.");
+        } else {
+            System.out.println("You did something wrong.");
+        }
+    }
+
     public E get(int i) {
         return arr[i];
     }
