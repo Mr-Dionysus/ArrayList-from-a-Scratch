@@ -5,12 +5,14 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        MyArrayList<String> strings = new MyArrayList<>(Arrays.asList("Hello", "Test", "Desert", "Happy"));
-        MyArrayList<Integer> nums = new MyArrayList<>(Arrays.asList(4, 1, 3, 8));
-        System.out.println(strings);
-        System.out.println(nums);
-        strings.sort();
+        MyArrayList<String> strings = new MyArrayList<>(Arrays.asList("Aello man", "Test", "Desert", "Happy", "Fest"));
+        MyArrayList<Integer> nums = new MyArrayList<>(Arrays.asList(4, 1, 5, 8, 6, 2, 9, 1));
+        MyArrayList<Character> chars = new MyArrayList<>(Arrays.asList('P', 'A', 'Z', 'B'));
+        MyArrayList<Boolean> bools = new MyArrayList<>(Arrays.asList(true, false, false, true, false));
+
         nums.sort();
+        MyArrayList myArrayList = new MyArrayList();
+        System.out.println(nums);
 
 
         MyArrayList<String> strings2 = new MyArrayList<String>();

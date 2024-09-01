@@ -118,15 +118,20 @@ public class MyArrayList<E> implements Serializable, Comparator<E> {
         int middleIndex = this.length() / 2;
         E pivot = this.get(middleIndex);
         this.delete(middleIndex);
+
+        MyArrayList<E> arrResult = new MyArrayList<>();
         MyArrayList<E> arrLeft = new MyArrayList<>();
         MyArrayList<E> arrRight = new MyArrayList<>();
 
         for (int i = 0; i < this.length(); i++) {
             E element = this.get(i);
-            if (compare(element, pivot) == -1) {
+            if (compare(element, pivot) == -1 || compare(element, pivot) == 0) {
                 arrLeft.add(element);
             }
         }
+
+        arrResult = sortRecursion(arrLeft, arrResult);
+        arrResult.add(pivot);
 
         for (int i = 0; i < this.length(); i++) {
             E element = this.get(i);
@@ -134,6 +139,155 @@ public class MyArrayList<E> implements Serializable, Comparator<E> {
                 arrRight.add(element);
             }
         }
+
+        sortRecursion(arrRight, arrResult);
+        this.clear();
+
+        for (int i = 0; i < arrResult.length(); i++) {
+            this.add(arrResult.get(i));
+        }
+    }
+
+    private MyArrayList<E> sortRecursion(MyArrayList<E> arr, MyArrayList<E> arrResult) {
+
+        if (arr.length() == 2) {
+            E element1 = arr.get(0);
+            E element2 = arr.get(1);
+
+            switch (compare(element1, element2)) {
+                case 1, 0:
+                    arrResult.add(element2);
+                    arrResult.add(element1);
+                    break;
+                case -1:
+                    arrResult.add(element1);
+                    arrResult.add(element2);
+                    break;
+                default:
+                    System.out.println("Something's wrong.");
+            }
+
+            return arrResult;
+        } else if (arr.length() == 1) {
+            arrResult.add(arr.get(0));
+            return arrResult;
+        } else if (arr.length() == 0) {
+            return arrResult;
+        }
+
+        int middleIndex = arr.length() / 2;
+        E pivot = arr.get(middleIndex);
+        arr.delete(middleIndex);
+        MyArrayList<E> arrLeft = new MyArrayList<>();
+        MyArrayList<E> arrRight = new MyArrayList<>();
+
+        for (int i = 0; i < arr.length(); i++) {
+            E element = arr.get(i);
+            if (compare(element, pivot) == -1 || compare(element, pivot) == 0) {
+                arrLeft.add(element);
+            }
+        }
+
+        arrResult = sortRecursion(arrLeft, arrResult);
+        arrResult.add(pivot);
+
+        for (int i = 0; i < arr.length(); i++) {
+            E element = arr.get(i);
+            if (compare(element, pivot) == 1) {
+                arrRight.add(element);
+            }
+        }
+
+        sortRecursion(arrRight, arrResult);
+        return arrResult;
+    }
+
+    public void sort(Comparator<E> comparator) {
+        int middleIndex = this.length() / 2;
+        E pivot = this.get(middleIndex);
+        this.delete(middleIndex);
+
+        MyArrayList<E> arrResult = new MyArrayList<>();
+        MyArrayList<E> arrLeft = new MyArrayList<>();
+        MyArrayList<E> arrRight = new MyArrayList<>();
+
+        for (int i = 0; i < this.length(); i++) {
+            E element = this.get(i);
+            if (compareObject(element, pivot, comparator) == -1 || compareObject(element, pivot, comparator) == 0) {
+                arrLeft.add(element);
+            }
+        }
+
+        arrResult = sortRecursion(arrLeft, arrResult);
+        arrResult.add(pivot);
+
+        for (int i = 0; i < this.length(); i++) {
+            E element = this.get(i);
+            if (compareObject(element, pivot, comparator) == 1) {
+                arrRight.add(element);
+            }
+        }
+
+        sortRecursion(arrRight, arrResult);
+        this.clear();
+
+        for (int i = 0; i < arrResult.length(); i++) {
+            this.add(arrResult.get(i));
+        }
+    }
+
+    private MyArrayList<E> sortRecursion(MyArrayList<E> arr, MyArrayList<E> arrResult, Comparator<E> comparator) {
+
+        if (arr.length() == 2) {
+            E element1 = arr.get(0);
+            E element2 = arr.get(1);
+
+            switch (compareObject(element1, element2, comparator)) {
+                case 1, 0:
+                    arrResult.add(element2);
+                    arrResult.add(element1);
+                    break;
+                case -1:
+                    arrResult.add(element1);
+                    arrResult.add(element2);
+                    break;
+                default:
+                    System.out.println("Something's wrong.");
+            }
+
+            return arrResult;
+        } else if (arr.length() == 1) {
+            arrResult.add(arr.get(0));
+            return arrResult;
+        } else if (arr.length() == 0) {
+            return arrResult;
+        }
+
+        int middleIndex = arr.length() / 2;
+        E pivot = arr.get(middleIndex);
+        arr.delete(middleIndex);
+        MyArrayList<E> arrLeft = new MyArrayList<>();
+        MyArrayList<E> arrRight = new MyArrayList<>();
+
+        for (int i = 0; i < arr.length(); i++) {
+            E element = arr.get(i);
+            if (compareObject(element, pivot, comparator) == -1 || compareObject(element, pivot, comparator) == 0) {
+                arrLeft.add(element);
+            }
+        }
+
+        arrResult = sortRecursion(arrLeft, arrResult);
+        arrResult.add(pivot);
+
+        for (int i = 0; i < arr.length(); i++) {
+            E element = arr.get(i);
+            if (compareObject(element, pivot, comparator) == 1) {
+                arrRight.add(element);
+            }
+        }
+
+        sortRecursion(arrRight, arrResult);
+        return arrResult;
     }
 
     @Override
@@ -174,7 +328,8 @@ public class MyArrayList<E> implements Serializable, Comparator<E> {
     public int compareString(E o1, E o2) {
         String str1 = (String) o1;
         String str2 = (String) o2;
-        return str1.compareTo(str2);
+        int comparison = str1.compareTo(str2);
+        return Integer.compare(comparison, 0);
     }
 
     public int compareInt(E o1, E o2) {
@@ -204,7 +359,8 @@ public class MyArrayList<E> implements Serializable, Comparator<E> {
     public int compareChar(E o1, E o2) {
         char char1 = (char) o1;
         char char2 = (char) o2;
-        return Character.compare(char1, char2);
+        int comparison = Character.compare(char1, char2);
+        return Integer.compare(comparison, 0);
     }
 
     public int compareShort(E o1, E o2) {
@@ -223,5 +379,9 @@ public class MyArrayList<E> implements Serializable, Comparator<E> {
         boolean boolean1 = (boolean) o1;
         boolean boolean2 = (boolean) o2;
         return Boolean.compare(boolean1, boolean2);
+    }
+
+    public int compareObject(E o1, E o2, Comparator<E> c) {
+        return c.compare(o1, o2);
     }
 }
