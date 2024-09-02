@@ -195,9 +195,11 @@ public class MyArrayList<E> implements Serializable {
     }
 
     /**
-     * QuickSort realisation from scratch. It uses the <b>middleIndex</b> as a first index of the
-     * element <b>pivot</b> with which all other elements will compare. <p>It deletes the element
-     * from the <b>arrMyArrayList</b> and starts checking all elements of the
+     * QuickSort realisation from scratch. It creates the <b>MyArrayList</b> with all elements
+     * and passes it with the array <b>arrResult</b> which at the end will be a sorted version of
+     * the used array. The method <b>quickSortRecursion</b> uses the <b>index</b> as a first
+     * index of the element <b>pivot</b> with which all other elements will compare. <p>It
+     * deletes the element from the <b>arrMyArrayList</b> and starts checking all elements of the
      * <b>arrMyArrayList</b> if they're less than or equals the <b>pivot</b>. If that's true than
      * all elements will be added to the <b>arrLeft</b> which will be used inside the
      * <b>quickSortRecursion</b> method. <p>That method will do practically the same process as the
@@ -215,32 +217,9 @@ public class MyArrayList<E> implements Serializable {
      * empty <b>arrMyArrayList</b> via for-loop.
      */
     public void quickSort() {
-        int middleIndex = this.length() / 2;
-        E pivot = this.get(middleIndex);
-        this.delete(middleIndex);
-
+        MyArrayList<E> arrStart = new MyArrayList<>(Arrays.asList(this.arrMyArrayList));
         MyArrayList<E> arrResult = new MyArrayList<>();
-        MyArrayList<E> arrLeft = new MyArrayList<>();
-        MyArrayList<E> arrRight = new MyArrayList<>();
-
-        for (int i = 0; i < this.length(); i++) {
-            E element = this.get(i);
-            if (compare(element, pivot) == -1 || compare(element, pivot) == 0) {
-                arrLeft.add(element);
-            }
-        }
-
-        quickSortRecursion(arrLeft, arrResult);
-        arrResult.add(pivot);
-
-        for (int i = 0; i < this.length(); i++) {
-            E element = this.get(i);
-            if (compare(element, pivot) == 1) {
-                arrRight.add(element);
-            }
-        }
-
-        quickSortRecursion(arrRight, arrResult);
+        quickSortRecursion(arrStart, arrResult);
         this.clear();
 
         for (int i = 0; i < arrResult.length(); i++) {
@@ -274,9 +253,9 @@ public class MyArrayList<E> implements Serializable {
             return;
         }
 
-        int middleIndex = arr.length() / 2;
-        E pivot = arr.get(middleIndex);
-        arr.delete(middleIndex);
+        int index = 0;
+        E pivot = arr.get(index);
+        arr.delete(index);
         MyArrayList<E> arrLeft = new MyArrayList<>();
         MyArrayList<E> arrRight = new MyArrayList<>();
 
@@ -301,55 +280,34 @@ public class MyArrayList<E> implements Serializable {
     }
 
     /**
-     * QuickSort realization for objects with the <b>comparator</b>. It uses the
-     * <b>middleIndex</b> as a first index of the
-     * element <b>pivot</b> with which all other elements will compare. <p>It deletes the element
-     * from the <b>arrMyArrayList</b> and starts checking with the <b>comparator</b> all elements of
-     * the <b>arrMyArrayList</b> if they're less than or equals the <b>pivot</b>. If that's true
-     * than all elements will be added to the <b>arrLeft</b> which will be used inside the
-     * <b>quickSortRecursion</b> method. <p>That method will do practically the same process as
-     * the <b>quickSort</b> but with a moment - at the end when it have an array with two
-     * elements it will compare them and add them to the array <b>arrResul</b> with ASC order. If
-     * an array have only one element than it will add it. If zero elements than it will stop
-     * .</p> <p>At the end <b>quickSortRecursion</b>will add all elements of the array
-     * <b>arrLeft</b> in ASC order to the array <b>arrResult</b> and than it adds the
-     * <b>pivot</b> itself to that array because all other element will be bigger than it so we
-     * can safely add it .</p><p>Then the process repeats but with the array <b>arrRight</b>
-     * which will have all the elements bigger than the <b>pivot</b> and it'll go to the
-     * <b>quickSortRecursion</b> method which will add to the array <b>arrResult</b> all elements
-     * bigger than the <b>pivot</b>.</p> At the end the array <b>arrMyArrayList</b> will be
-     * cleared from all it's elements and all the elements of the sorted array <b>arrResult</b>
-     * will be added to the empty <b>arrMyArrayList</b> via for-loop.
+     * QuickSort realization for objects with the <b>comparator</b>. It creates the
+     * <b>MyArrayList</b> with all elements and passes it with the array <b>arrResult</b> which
+     * at the end will be a sorted version of the used array. The method
+     * <b>quickSortRecursion</b> uses the <b>index</b> as a first index of the element
+     * <b>pivot</b> with which all other elements will compare. <p>It
+     * deletes the element from the <b>arrMyArrayList</b> and starts checking all elements of the
+     * <b>arrMyArrayList</b> if they're less than or equals the <b>pivot</b>. If that's true than
+     * all elements will be added to the <b>arrLeft</b> which will be used inside the
+     * <b>quickSortRecursion</b> method. <p>That method will do practically the same process as the
+     * <b>quickSort</b> but with a moment - at the end when it have an array with two elements it
+     * will compare them and add them to the array <b>arrResul</b> with ASC order. If an array
+     * have only one element than it will add it. If zero elements than it will stop.</p>
+     * <p>At the end <b>quickSortRecursion</b>will add all elements of the array <b>arrLeft</b>
+     * in ASC order to the array <b>arrResult</b> and than it adds the <b>pivot</b> itself to
+     * that array because all other element will be bigger than it so we can safely add it
+     * .</p><p>Then the process repeats but with the array <b>arrRight</b> which will have all
+     * the elements bigger than the <b>pivot</b> and it'll go to the <b>quickSortRecursion</b>
+     * method which will add to the array <b>arrResult</b> all elements bigger than the
+     * <b>pivot</b>.</p> At the end the array <b>arrMyArrayList</b> will be cleared from all it's
+     * elements and all the elements of the sorted array <b>arrResult</b> will be added to the
+     * empty <b>arrMyArrayList</b> via for-loop.
      *
      * @param comparator used to compare object with it's compare method.
      */
     public void quickSort(Comparator<E> comparator) {
-        int middleIndex = this.length() / 2;
-        E pivot = this.get(middleIndex);
-        this.delete(middleIndex);
-
+        MyArrayList<E> arrStart = new MyArrayList<>(Arrays.asList(this.arrMyArrayList));
         MyArrayList<E> arrResult = new MyArrayList<>();
-        MyArrayList<E> arrLeft = new MyArrayList<>();
-        MyArrayList<E> arrRight = new MyArrayList<>();
-
-        for (int i = 0; i < this.length(); i++) {
-            E element = this.get(i);
-            if (compareObject(element, pivot, comparator) == -1 || compareObject(element, pivot, comparator) == 0) {
-                arrLeft.add(element);
-            }
-        }
-
-        quickSortRecursion(arrLeft, arrResult, comparator);
-        arrResult.add(pivot);
-
-        for (int i = 0; i < this.length(); i++) {
-            E element = this.get(i);
-            if (compareObject(element, pivot, comparator) == 1) {
-                arrRight.add(element);
-            }
-        }
-
-        quickSortRecursion(arrRight, arrResult, comparator);
+        quickSortRecursion(arrStart, arrResult, comparator);
         this.clear();
 
         for (int i = 0; i < arrResult.length(); i++) {
@@ -384,9 +342,9 @@ public class MyArrayList<E> implements Serializable {
             return;
         }
 
-        int middleIndex = arr.length() / 2;
-        E pivot = arr.get(middleIndex);
-        arr.delete(middleIndex);
+        int index = 0;
+        E pivot = arr.get(index);
+        arr.delete(index);
         MyArrayList<E> arrLeft = new MyArrayList<>();
         MyArrayList<E> arrRight = new MyArrayList<>();
 

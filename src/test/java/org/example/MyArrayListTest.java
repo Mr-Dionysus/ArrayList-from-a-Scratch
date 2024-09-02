@@ -182,6 +182,7 @@ class MyArrayListTest {
     @DisplayName("QuickSort the array")
     void quickSort() {
         doubles.quickSort();
+        System.out.println(doubles);
         MyArrayList<Double> actualArray = doubles;
         MyArrayList<Double> expectedArray = new MyArrayList<>(Arrays.asList(1.4, 2.3, 2.7, 3.6, 10.5));
         boolean areArraysEqual = true;
