@@ -23,7 +23,7 @@ import java.util.Comparator;
  *
  * @author <i>Denis Reznikov</i>
  */
-public class MyArrayList<E> implements Serializable, Comparator<E> {
+public class MyArrayList<E> implements Serializable {
     private final transient Object[] DEFAULT_EMPTY_ARR = {};
 
     /**
@@ -339,7 +339,7 @@ public class MyArrayList<E> implements Serializable, Comparator<E> {
             }
         }
 
-        quickSortRecursion(arrLeft, arrResult);
+        quickSortRecursion(arrLeft, arrResult, comparator);
         arrResult.add(pivot);
 
         for (int i = 0; i < this.length(); i++) {
@@ -349,7 +349,7 @@ public class MyArrayList<E> implements Serializable, Comparator<E> {
             }
         }
 
-        quickSortRecursion(arrRight, arrResult);
+        quickSortRecursion(arrRight, arrResult, comparator);
         this.clear();
 
         for (int i = 0; i < arrResult.length(); i++) {
@@ -410,23 +410,7 @@ public class MyArrayList<E> implements Serializable, Comparator<E> {
         quickSortRecursion(arrRight, arrResult);
     }
 
-    /**
-     * Compares first object <b>o1</b> and second object <b>o2</b> with corresponding private
-     * methods that uses compare methods that correlate with objects' type. It takes type from
-     * the instanceof. It can be used with  any primitive types and with a string. For other
-     * objects is used private method inside  <b>quickSort</b> with comparator in parameters.
-     *
-     * @param o1 the first object to be compared.
-     * @param o2 the second object to be compared.
-     * @return <p><b> 1</b> -> if the first object <b>o1</b> bigger than the second object <b>o2</b>
-     * .</p>
-     * <p><b> 0</b> -> if they're equals.</p>
-     * <p><b>-1</b> -> if second object <b>o2</b> bigger than the first object <b>o1</b>
-     * .</p>
-     * <p><b>-2</b> -> if something was wrong.</p>
-     */
-    @Override
-    public int compare(E o1, E o2) {
+    private int compare(E o1, E o2) {
         boolean isString = o1 instanceof String;
         boolean isInt = o1 instanceof Integer;
         boolean isDouble = o1 instanceof Double;
