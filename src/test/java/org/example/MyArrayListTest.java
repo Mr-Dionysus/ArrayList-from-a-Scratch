@@ -1,5 +1,6 @@
 package org.example;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -32,6 +33,7 @@ class MyArrayListTest {
     };
 
     @Test
+    @DisplayName("Length of the array")
     void length() {
         int actual = strings.length();
         int expected = 5;
@@ -39,6 +41,7 @@ class MyArrayListTest {
     }
 
     @Test
+    @DisplayName("Add an element to the end of the array")
     void add() {
         integers.add(88);
         MyArrayList<Integer> actualArray = integers;
@@ -59,6 +62,7 @@ class MyArrayListTest {
     }
 
     @Test
+    @DisplayName("Add 1000 elements to the array")
     void add1000() {
         for (int i = 0; i < 1000; i++) {
             integers.add(10);
@@ -70,6 +74,7 @@ class MyArrayListTest {
     }
 
     @Test
+    @DisplayName("Replace an element at the index i with the new element")
     void addWithIndex() {
         integers.add(3, 88);
         MyArrayList<Integer> actualArray = integers;
@@ -90,6 +95,7 @@ class MyArrayListTest {
     }
 
     @Test
+    @DisplayName("Add the element at the index i with an offset")
     void addWithOffset() {
         integers.addWithOffset(3, 88);
         MyArrayList<Integer> actualArray = integers;
@@ -110,6 +116,7 @@ class MyArrayListTest {
     }
 
     @Test
+    @DisplayName("Delete an element at the index i")
     void delete() {
         integers.delete(5);
         MyArrayList<Integer> actualArray = integers;
@@ -130,6 +137,7 @@ class MyArrayListTest {
     }
 
     @Test
+    @DisplayName("Delete 500 elements from the end")
     void delete500() {
         for (int i = 0; i < 1000; i++) {
             integers.add(10);
@@ -146,6 +154,7 @@ class MyArrayListTest {
     }
 
     @Test
+    @DisplayName("Get the element from the index i")
     void get() {
         char actual = chars.get(2);
         char expected = 'G';
@@ -153,6 +162,7 @@ class MyArrayListTest {
     }
 
     @Test
+    @DisplayName("Delete all elements")
     void clear() {
         booleans.clear();
         int actual = booleans.length();
@@ -161,6 +171,7 @@ class MyArrayListTest {
     }
 
     @Test
+    @DisplayName("Translate all elements to one string")
     void testToString() {
         String actual = longs.toString();
         String expected = "[10572, 3685, 4879]";
@@ -168,6 +179,7 @@ class MyArrayListTest {
     }
 
     @Test
+    @DisplayName("QuickSort the array")
     void quickSort() {
         doubles.quickSort();
         MyArrayList<Double> actualArray = doubles;
@@ -188,6 +200,7 @@ class MyArrayListTest {
     }
 
     @Test
+    @DisplayName("QuickSort the array with comparator")
     void QuickSortWithComparator() {
         persons.quickSort(comparatorPerson);
         MyArrayList<Person> actualArray = persons;
