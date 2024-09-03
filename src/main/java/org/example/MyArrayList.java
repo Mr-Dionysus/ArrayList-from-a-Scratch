@@ -416,93 +416,14 @@ public class MyArrayList<E> implements Serializable {
     }
 
     private int compare(E o1, E o2) {
-        boolean isString = o1 instanceof String;
-        boolean isInt = o1 instanceof Integer;
-        boolean isDouble = o1 instanceof Double;
-        boolean isFloat = o1 instanceof Float;
-        boolean isByte = o1 instanceof Byte;
-        boolean isChar = o1 instanceof Character;
-        boolean isShort = o1 instanceof Short;
-        boolean isLong = o1 instanceof Long;
-        boolean isBoolean = o1 instanceof Boolean;
+        int result = -2;
 
-        if (isString) {
-            return compareString(o1, o2);
-        } else if (isInt) {
-            return compareInt(o1, o2);
-        } else if (isDouble) {
-            return compareDouble(o1, o2);
-        } else if (isFloat) {
-            return compareFloat(o1, o2);
-        } else if (isByte) {
-            return compareByte(o1, o2);
-        } else if (isChar) {
-            return compareChar(o1, o2);
-        } else if (isShort) {
-            return compareShort(o1, o2);
-        } else if (isLong) {
-            return compareLong(o1, o2);
-        } else if (isBoolean) {
-            return compareBoolean(o1, o2);
+        if (o1 instanceof Comparable<?>) {
+            result = ((Comparable<E>) o1).compareTo(o2);
         } else {
-            return -2;
+            System.out.println("These objects aren't Comparable");
         }
-    }
-
-    private int compareString(E o1, E o2) {
-        String str1 = (String) o1;
-        String str2 = (String) o2;
-        int comparison = str1.compareTo(str2);
-        return Integer.compare(comparison, 0);
-    }
-
-    private int compareInt(E o1, E o2) {
-        int int1 = (int) o1;
-        int int2 = (int) o2;
-        return Integer.compare(int1, int2);
-    }
-
-    private int compareDouble(E o1, E o2) {
-        double double1 = (double) o1;
-        double double2 = (double) o2;
-        return Double.compare(double1, double2);
-    }
-
-    private int compareFloat(E o1, E o2) {
-        float float1 = (float) o1;
-        float float2 = (float) o2;
-        return Float.compare(float1, float2);
-    }
-
-    private int compareByte(E o1, E o2) {
-        byte byte1 = (byte) o1;
-        byte byte2 = (byte) o2;
-        return Byte.compare(byte1, byte2);
-    }
-
-    private int compareChar(E o1, E o2) {
-        char char1 = (char) o1;
-        char char2 = (char) o2;
-        int comparison = Character.compare(char1, char2);
-        return Integer.compare(comparison, 0);
-    }
-
-    private int compareShort(E o1, E o2) {
-        short short1 = (short) o1;
-        short short2 = (short) o2;
-        return Short.compare(short1, short2);
-    }
-
-    private int compareLong(E o1, E o2) {
-        long long1 = (long) o1;
-        long long2 = (long) o2;
-        return Long.compare(long1, long2);
-    }
-
-    private int compareBoolean(E o1, E o2) {
-        boolean boolean1 = (boolean) o1;
-        boolean boolean2 = (boolean) o2;
-        return Boolean.compare(boolean1, boolean2);
+        return result;
     }
 
     private int compareObject(E o1, E o2, Comparator<E> c) {
