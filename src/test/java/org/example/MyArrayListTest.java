@@ -198,7 +198,6 @@ class MyArrayListTest {
         MyArrayList<Double> doubles = new MyArrayList<>(Arrays.asList(1.4, 3.6, 2.7, 10.5, 2.3));
 
         doubles.quickMergeSort();
-        System.out.println(doubles);
         MyArrayList<Double> actualArray = doubles;
         MyArrayList<Double> expectedArray = new MyArrayList<>(Arrays.asList(1.4, 2.3, 2.7, 3.6, 10.5));
         boolean areArraysEqual = true;
@@ -303,5 +302,19 @@ class MyArrayListTest {
         String expected = "[]";
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("QuickMergeSort with not comparable objects")
+    void quickMergeSortNotComparable() {
+        PersonTest personTest1 = new PersonTest(192);
+        PersonTest personTest2 = new PersonTest(180);
+
+        MyArrayList<PersonTest> personsTest = new MyArrayList<>(Arrays.asList(personTest1, personTest2));
+        Exception actualException = assertThrows(RuntimeException.class, personsTest::quickMergeSort);
+        String actualMessage = actualException.getMessage();
+        String expectedMessage = "These types aren't comparable";
+
+        assertEquals(expectedMessage, actualMessage);
     }
 }

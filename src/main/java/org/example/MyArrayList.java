@@ -101,9 +101,9 @@ public class MyArrayList<E> implements Serializable {
             arrCopy[i] = element;
             this.arrMyArrayList = arrCopy;
         } else if (i < 0) {
-            System.out.println("You can't use negative numbers as an index.");
+            throw new RuntimeException("You can't use negative numbers as an index.");
         } else if (i > ARR_OLD_LENGTH) {
-            System.out.println("You can't add an element if the index is bigger than old length + 1.");
+            throw new RuntimeException("You can't add an element if the index is bigger than old " + "length + 1.");
         }
     }
 
@@ -130,11 +130,11 @@ public class MyArrayList<E> implements Serializable {
         } else if (i == ARR_OLD_LENGTH) {
             this.add(element);
         } else if (i < 0) {
-            System.out.println("You can't use negative numbers as an index.");
+            throw new RuntimeException("You can't use negative numbers as an index.");
         } else if (i > ARR_OLD_LENGTH) {
-            System.out.println("You can't add the element if the index is bigger than an old length + 1.");
+            throw new RuntimeException("You can't add the element if the index is bigger than an " + "old length + 1.");
         } else {
-            System.out.println("Something's wrong.");
+            throw new RuntimeException("Something's wrong with addWithOffset method of " + "MyArrayList class");
         }
     }
 
@@ -157,11 +157,11 @@ public class MyArrayList<E> implements Serializable {
             System.arraycopy(arrRightPart, 0, result, i, arrRightPart.length);
             this.arrMyArrayList = result;
         } else if (i < 0) {
-            System.out.println("You can't use negative numbers as an index.");
+            throw new RuntimeException("You can't use negative numbers as an index.");
         } else if (i >= ARR_OLD_LENGTH) {
-            System.out.println("You can't delete the element because that arr doesn't have that index.");
+            throw new RuntimeException("You can't delete the element because that arr doesn't " + "have that index.");
         } else {
-            System.out.println("You did something wrong.");
+            throw new RuntimeException("Something's wrong with delete method of MyArrayList class");
         }
     }
 
@@ -244,7 +244,7 @@ public class MyArrayList<E> implements Serializable {
                     arrResult.add(element2);
                     break;
                 default:
-                    System.out.println("Something's wrong.");
+                    throw new RuntimeException("Something's wrong with the quickMergeSortRecursion method of MyArrayList class");
             }
 
             return;
@@ -335,7 +335,7 @@ public class MyArrayList<E> implements Serializable {
                     arrResult.add(element2);
                     break;
                 default:
-                    System.out.println("Something's wrong.");
+                    throw new RuntimeException("Something's wrong with the " + "quickMergeSortRecursion with a Comparator method of MyArrayList " + "class");
             }
 
             return;
@@ -416,14 +416,12 @@ public class MyArrayList<E> implements Serializable {
     }
 
     private int compare(E o1, E o2) {
-        int result = -2;
 
-        if (o1 instanceof Comparable<?>) {
-            result = ((Comparable<E>) o1).compareTo(o2);
-        } else {
-            System.out.println("These objects aren't Comparable");
+        if (!(o1 instanceof Comparable<?>)) {
+            throw new RuntimeException("These types aren't comparable");
         }
-        return result;
+
+        return ((Comparable<E>) o1).compareTo(o2);
     }
 
     private int compareObject(E o1, E o2, Comparator<E> c) {
