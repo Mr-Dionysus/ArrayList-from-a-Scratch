@@ -195,31 +195,33 @@ public class MyArrayList<E> implements Serializable {
     }
 
     /**
-     * QuickSort realisation from scratch. It creates the <b>MyArrayList</b> with all elements
+     * QuickMergeSort realisation from scratch. It creates the <b>MyArrayList</b> with all elements
      * and passes it with the array <b>arrResult</b> which at the end will be a sorted version of
-     * the used array. The method <b>quickSortRecursion</b> uses the <b>index</b> as a first
+     * the used array. The method <b>quickMergeSortRecursion</b> uses the <b>index</b> as a first
      * index of the element <b>pivot</b> with which all other elements will compare. <p>It
      * deletes the element from the <b>arrMyArrayList</b> and starts checking all elements of the
      * <b>arrMyArrayList</b> if they're less than or equals the <b>pivot</b>. If that's true than
      * all elements will be added to the <b>arrLeft</b> which will be used inside the
-     * <b>quickSortRecursion</b> method. <p>That method will do practically the same process as the
-     * <b>quickSort</b> but with a moment - at the end when it have an array with two elements it
+     * <b>quickMergeSortRecursion</b> method. <p>That method will do practically the same process as
+     * the
+     * <b>quickMergeSort</b> but with a moment - at the end when it have an array with two
+     * elements it
      * will compare them and add them to the array <b>arrResul</b> with ASC order. If an array
      * have only one element than it will add it. If zero elements than it will stop.</p>
-     * <p>At the end <b>quickSortRecursion</b>will add all elements of the array <b>arrLeft</b>
+     * <p>At the end <b>quickMergeSortRecursion</b>will add all elements of the array <b>arrLeft</b>
      * in ASC order to the array <b>arrResult</b> and than it adds the <b>pivot</b> itself to
      * that array because all other element will be bigger than it so we can safely add it
      * .</p><p>Then the process repeats but with the array <b>arrRight</b> which will have all
-     * the elements bigger than the <b>pivot</b> and it'll go to the <b>quickSortRecursion</b>
+     * the elements bigger than the <b>pivot</b> and it'll go to the <b>quickMergeSortRecursion</b>
      * method which will add to the array <b>arrResult</b> all elements bigger than the
      * <b>pivot</b>.</p> At the end the array <b>arrMyArrayList</b> will be cleared from all it's
      * elements and all the elements of the sorted array <b>arrResult</b> will be added to the
      * empty <b>arrMyArrayList</b> via for-loop.
      */
-    public void quickSort() {
+    public void quickMergeSort() {
         MyArrayList<E> arrStart = new MyArrayList<>(Arrays.asList(this.arrMyArrayList));
         MyArrayList<E> arrResult = new MyArrayList<>();
-        quickSortRecursion(arrStart, arrResult);
+        quickMergeSortRecursion(arrStart, arrResult);
         this.clear();
 
         for (int i = 0; i < arrResult.length(); i++) {
@@ -227,7 +229,7 @@ public class MyArrayList<E> implements Serializable {
         }
     }
 
-    private void quickSortRecursion(MyArrayList<E> arr, MyArrayList<E> arrResult) {
+    private void quickMergeSortRecursion(MyArrayList<E> arr, MyArrayList<E> arrResult) {
         if (arr.length() == 2) {
             E element1 = arr.get(0);
             E element2 = arr.get(1);
@@ -266,7 +268,7 @@ public class MyArrayList<E> implements Serializable {
             }
         }
 
-        quickSortRecursion(arrLeft, arrResult);
+        quickMergeSortRecursion(arrLeft, arrResult);
         arrResult.add(pivot);
 
         for (int i = 0; i < arr.length(); i++) {
@@ -276,27 +278,29 @@ public class MyArrayList<E> implements Serializable {
             }
         }
 
-        quickSortRecursion(arrRight, arrResult);
+        quickMergeSortRecursion(arrRight, arrResult);
     }
 
     /**
-     * QuickSort realization for objects with the <b>comparator</b>. It creates the
+     * QuickMergeSort realization for objects with the <b>comparator</b>. It creates the
      * <b>MyArrayList</b> with all elements and passes it with the array <b>arrResult</b> which
      * at the end will be a sorted version of the used array. The method
-     * <b>quickSortRecursion</b> uses the <b>index</b> as a first index of the element
+     * <b>quickMergeSortRecursion</b> uses the <b>index</b> as a first index of the element
      * <b>pivot</b> with which all other elements will compare. <p>It
      * deletes the element from the <b>arrMyArrayList</b> and starts checking all elements of the
      * <b>arrMyArrayList</b> if they're less than or equals the <b>pivot</b>. If that's true than
      * all elements will be added to the <b>arrLeft</b> which will be used inside the
-     * <b>quickSortRecursion</b> method. <p>That method will do practically the same process as the
-     * <b>quickSort</b> but with a moment - at the end when it have an array with two elements it
+     * <b>quickMergeSortRecursion</b> method. <p>That method will do practically the same process as
+     * the
+     * <b>quickMergeSort</b> but with a moment - at the end when it have an array with two
+     * elements it
      * will compare them and add them to the array <b>arrResul</b> with ASC order. If an array
      * have only one element than it will add it. If zero elements than it will stop.</p>
-     * <p>At the end <b>quickSortRecursion</b>will add all elements of the array <b>arrLeft</b>
+     * <p>At the end <b>quickMergeSortRecursion</b>will add all elements of the array <b>arrLeft</b>
      * in ASC order to the array <b>arrResult</b> and than it adds the <b>pivot</b> itself to
      * that array because all other element will be bigger than it so we can safely add it
      * .</p><p>Then the process repeats but with the array <b>arrRight</b> which will have all
-     * the elements bigger than the <b>pivot</b> and it'll go to the <b>quickSortRecursion</b>
+     * the elements bigger than the <b>pivot</b> and it'll go to the <b>quickMergeSortRecursion</b>
      * method which will add to the array <b>arrResult</b> all elements bigger than the
      * <b>pivot</b>.</p> At the end the array <b>arrMyArrayList</b> will be cleared from all it's
      * elements and all the elements of the sorted array <b>arrResult</b> will be added to the
@@ -304,10 +308,10 @@ public class MyArrayList<E> implements Serializable {
      *
      * @param comparator used to compare object with it's compare method.
      */
-    public void quickSort(Comparator<E> comparator) {
+    public void quickMergeSort(Comparator<E> comparator) {
         MyArrayList<E> arrStart = new MyArrayList<>(Arrays.asList(this.arrMyArrayList));
         MyArrayList<E> arrResult = new MyArrayList<>();
-        quickSortRecursion(arrStart, arrResult, comparator);
+        quickMergeSortRecursion(arrStart, arrResult, comparator);
         this.clear();
 
         for (int i = 0; i < arrResult.length(); i++) {
@@ -315,7 +319,7 @@ public class MyArrayList<E> implements Serializable {
         }
     }
 
-    private void quickSortRecursion(MyArrayList<E> arr, MyArrayList<E> arrResult, Comparator<E> comparator) {
+    private void quickMergeSortRecursion(MyArrayList<E> arr, MyArrayList<E> arrResult, Comparator<E> comparator) {
 
         if (arr.length() == 2) {
             E element1 = arr.get(0);
@@ -355,7 +359,7 @@ public class MyArrayList<E> implements Serializable {
             }
         }
 
-        quickSortRecursion(arrLeft, arrResult);
+        quickMergeSortRecursion(arrLeft, arrResult, comparator);
         arrResult.add(pivot);
 
         for (int i = 0; i < arr.length(); i++) {
@@ -365,7 +369,50 @@ public class MyArrayList<E> implements Serializable {
             }
         }
 
-        quickSortRecursion(arrRight, arrResult);
+        quickMergeSortRecursion(arrRight, arrResult, comparator);
+    }
+
+    /**
+     * My QuickSort realization. Method is used as a start for the quickSort algorithm for user's
+     * convenience. Algorithm itself uses array as <b>arrMyArrayList</b>, indexes of the
+     * beginning and of the end of the array. Firstly it sorts the left part of the array by
+     * choosing the <b>pivot</b> with the <b>indexEnd</b>. Next it will compare each element of
+     * the <b>arr</b> between the <b>indexBegin</b> and the <b>indexEnd</b> and if an element
+     * will be smaller than the <b>pivot</b> than it will go to the left of the <b>pivot</b>.
+     * When the left side will be gone it will start to sort right side.
+     */
+    public void quickSort() {
+        quickSortAlgorithm(this.arrMyArrayList, 0, this.length() - 1);
+    }
+
+    private void quickSortAlgorithm(E[] arr, int indexBegin, int indexEnd) {
+        if (indexBegin < indexEnd) {
+            int partitionIndex = partition(arr, indexBegin, indexEnd);
+
+            quickSortAlgorithm(arr, indexBegin, partitionIndex - 1);
+            quickSortAlgorithm(arr, partitionIndex + 1, indexEnd);
+        }
+    }
+
+    private int partition(E[] arr, int indexBegin, int indexEnd) {
+        E pivot = arr[indexEnd];
+        int i = (indexBegin - 1);
+
+        for (int j = indexBegin; j < indexEnd; j++) {
+            if (compare(arr[j], pivot) == -1) {
+                i++;
+
+                E temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        E temp = arr[i + 1];
+        arr[i + 1] = arr[indexEnd];
+        arr[indexEnd] = temp;
+
+        return i + 1;
     }
 
     private int compare(E o1, E o2) {
@@ -459,6 +506,10 @@ public class MyArrayList<E> implements Serializable {
     }
 
     private int compareObject(E o1, E o2, Comparator<E> c) {
+        if (c == null) {
+            return 0;
+        }
+
         return c.compare(o1, o2);
     }
 }

@@ -162,6 +162,12 @@ class MyArrayListTest {
     }
 
     @Test
+    @DisplayName("Try to get an element with a wrong index")
+    void getWrongIndex() {
+        integers.get(-1);
+    }
+
+    @Test
     @DisplayName("Delete all elements")
     void clear() {
         booleans.clear();
@@ -179,9 +185,9 @@ class MyArrayListTest {
     }
 
     @Test
-    @DisplayName("QuickSort the array")
-    void quickSort() {
-        doubles.quickSort();
+    @DisplayName("QuickMergeSort the array")
+    void quickMergeSort() {
+        doubles.quickMergeSort();
         System.out.println(doubles);
         MyArrayList<Double> actualArray = doubles;
         MyArrayList<Double> expectedArray = new MyArrayList<>(Arrays.asList(1.4, 2.3, 2.7, 3.6, 10.5));
@@ -201,23 +207,73 @@ class MyArrayListTest {
     }
 
     @Test
-    @DisplayName("QuickSort the array with comparator")
-    void QuickSortWithComparator() {
-        persons.quickSort(comparatorPerson);
+    @DisplayName("QuickMergeSort the array with comparator")
+    void QuickMergeSortWithComparator() {
+        persons.quickMergeSort(comparatorPerson);
         MyArrayList<Person> actualArray = persons;
         MyArrayList<Person> expectedArray = new MyArrayList<>(Arrays.asList(person1, person3, person2));
         boolean areArraysEqual = true;
 
-        for (int i = 0; i < persons.length(); i++) {
-            Person actualElement = actualArray.get(i);
-            Person expectedElement = expectedArray.get(i);
+        if (actualArray.length() != expectedArray.length()) {
+            areArraysEqual = false;
+        } else {
+            for (int i = 0; i < expectedArray.length(); i++) {
+                Person actualElement = actualArray.get(i);
+                Person expectedElement = expectedArray.get(i);
 
-            if (comparatorPerson.compare(actualElement, expectedElement) != 0) {
-                areArraysEqual = false;
-                break;
+                if (comparatorPerson.compare(actualElement, expectedElement) != 0) {
+                    areArraysEqual = false;
+                    break;
+                }
             }
         }
 
         assertTrue(areArraysEqual);
+    }
+
+    @Test
+    @DisplayName("QuickSort")
+    void quickSort() {
+        integers.quickSort();
+        MyArrayList<Integer> actualArray = integers;
+        MyArrayList<Integer> expectedArray = new MyArrayList<>(Arrays.asList(1, 1, 2, 4, 5, 6, 8, 9));
+        boolean areArraysEqual = true;
+
+        if (actualArray.length() != expectedArray.length()) {
+            areArraysEqual = false;
+        } else {
+            for (int i = 0; i < expectedArray.length(); i++) {
+                int actualElement = actualArray.get(i);
+                int expectedElement = expectedArray.get(i);
+
+                if (actualElement != expectedElement) {
+                    areArraysEqual = false;
+                    break;
+                }
+            }
+        }
+
+        assertTrue(areArraysEqual);
+    }
+
+    @Test
+    @DisplayName("Sorting MyArrayList with objects without a working comparator")
+    void quickMergeSortObject() {
+        persons.quickMergeSort(null);
+        String actual = persons.toString();
+        String expected = "[Person{height=178.0}, Person{height=190.0}, Person{height=160.0}]";
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("QuickMergeSort with an empty MyArrayList")
+    void quickMergeSortEmptyArr() {
+        MyArrayList actualArray = new MyArrayList();
+        actualArray.quickMergeSort();
+        String actual = actualArray.toString();
+        String expected = "[]";
+
+        assertEquals(expected, actual);
     }
 }
