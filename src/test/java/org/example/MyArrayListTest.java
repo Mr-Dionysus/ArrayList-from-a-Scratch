@@ -6,35 +6,15 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class MyArrayListTest {
-    MyArrayList<String> strings = new MyArrayList<>(Arrays.asList("Bounty", "Test", "Desert", "Happy", "Fest"));
-    MyArrayList<Integer> integers = new MyArrayList<>(Arrays.asList(4, 1, 5, 8, 6, 2, 9, 1));
-    MyArrayList<Character> chars = new MyArrayList<>(Arrays.asList('P', 'A', 'G', 'B'));
-    MyArrayList<Boolean> booleans = new MyArrayList<>(Arrays.asList(true, false, false, true, false));
-    MyArrayList<Double> doubles = new MyArrayList<>(Arrays.asList(1.4, 3.6, 2.7, 10.5, 2.3));
-    MyArrayList<Float> floats = new MyArrayList<>(Arrays.asList(1.45f, 7.12f, 3.13f));
-    MyArrayList<Byte> bytes = new MyArrayList<>(Arrays.asList(new Byte[]{100, -34, 88}));
-    MyArrayList<Short> shorts = new MyArrayList<>(Arrays.asList(new Short[]{1084, 356, 487}));
-    MyArrayList<Long> longs = new MyArrayList<>(Arrays.asList(10572L, 3685L, 4879L));
-
-    Person person1 = new Person(160);
-    Person person2 = new Person(190);
-    Person person3 = new Person(178);
-    MyArrayList<Person> persons = new MyArrayList<>(Arrays.asList(person1, person2, person3));
-    Comparator<Person> comparatorPerson = new Comparator<Person>() {
-        @Override
-        public int compare(Person o1, Person o2) {
-            return Double.compare(o1.getHeight(), o2.getHeight());
-        }
-    };
-
     @Test
     @DisplayName("Length of the array")
     void length() {
+        MyArrayList<String> strings = new MyArrayList<>(Arrays.asList("Bounty", "Test", "Desert", "Happy", "Fest"));
+
         int actual = strings.length();
         int expected = 5;
         assertEquals(expected, actual);
@@ -43,6 +23,8 @@ class MyArrayListTest {
     @Test
     @DisplayName("Add an element to the end of the array")
     void add() {
+        MyArrayList<Integer> integers = new MyArrayList<>(Arrays.asList(4, 1, 5, 8, 6, 2, 9, 1));
+
         integers.add(88);
         MyArrayList<Integer> actualArray = integers;
         MyArrayList<Integer> expectedArray = new MyArrayList<>(Arrays.asList(4, 1, 5, 8, 6, 2, 9, 1, 88));
@@ -64,9 +46,12 @@ class MyArrayListTest {
     @Test
     @DisplayName("Add 1000 elements to the array")
     void add1000() {
+        MyArrayList<Integer> integers = new MyArrayList<>(Arrays.asList(4, 1, 5, 8, 6, 2, 9, 1));
+
         for (int i = 0; i < 1000; i++) {
             integers.add(10);
         }
+
         int actual = integers.length();
         int expected = 1008;
 
@@ -76,6 +61,8 @@ class MyArrayListTest {
     @Test
     @DisplayName("Replace an element at the index i with the new element")
     void addWithIndex() {
+        MyArrayList<Integer> integers = new MyArrayList<>(Arrays.asList(4, 1, 5, 8, 6, 2, 9, 1));
+
         integers.add(3, 88);
         MyArrayList<Integer> actualArray = integers;
         MyArrayList<Integer> expectedArray = new MyArrayList<>(Arrays.asList(4, 1, 5, 88, 6, 2, 9, 1));
@@ -97,6 +84,8 @@ class MyArrayListTest {
     @Test
     @DisplayName("Add the element at the index i with an offset")
     void addWithOffset() {
+        MyArrayList<Integer> integers = new MyArrayList<>(Arrays.asList(4, 1, 5, 8, 6, 2, 9, 1));
+
         integers.addWithOffset(3, 88);
         MyArrayList<Integer> actualArray = integers;
         MyArrayList<Integer> expectedArray = new MyArrayList<>(Arrays.asList(4, 1, 5, 88, 8, 6, 2, 9, 1));
@@ -118,6 +107,8 @@ class MyArrayListTest {
     @Test
     @DisplayName("Delete an element at the index i")
     void delete() {
+        MyArrayList<Integer> integers = new MyArrayList<>(Arrays.asList(4, 1, 5, 8, 6, 2, 9, 1));
+
         integers.delete(5);
         MyArrayList<Integer> actualArray = integers;
         MyArrayList<Integer> expectedArray = new MyArrayList<>(Arrays.asList(4, 1, 5, 8, 6, 9, 1));
@@ -139,6 +130,8 @@ class MyArrayListTest {
     @Test
     @DisplayName("Delete 500 elements from the end")
     void delete500() {
+        MyArrayList<Integer> integers = new MyArrayList<>(Arrays.asList(4, 1, 5, 8, 6, 2, 9, 1));
+
         for (int i = 0; i < 1000; i++) {
             integers.add(10);
         }
@@ -156,6 +149,8 @@ class MyArrayListTest {
     @Test
     @DisplayName("Get the element from the index i")
     void get() {
+        MyArrayList<Character> chars = new MyArrayList<>(Arrays.asList('P', 'A', 'G', 'B'));
+
         char actual = chars.get(2);
         char expected = 'G';
         assertEquals(expected, actual);
@@ -164,12 +159,23 @@ class MyArrayListTest {
     @Test
     @DisplayName("Try to get an element with a wrong index")
     void getWrongIndex() {
-        integers.get(-1);
+        MyArrayList<Integer> integers = new MyArrayList<>(Arrays.asList(4, 1, 5, 8, 6, 2, 9, 1));
+
+        Exception actualException = assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            integers.get(-1);
+        });
+
+        String expectedMessage = "Index -1 out of bounds for length 8";
+        String actualMessage = actualException.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
     @DisplayName("Delete all elements")
     void clear() {
+        MyArrayList<Boolean> booleans = new MyArrayList<>(Arrays.asList(true, false, false, true, false));
+
         booleans.clear();
         int actual = booleans.length();
         int expected = 0;
@@ -179,6 +185,8 @@ class MyArrayListTest {
     @Test
     @DisplayName("Translate all elements to one string")
     void testToString() {
+        MyArrayList<Long> longs = new MyArrayList<>(Arrays.asList(10572L, 3685L, 4879L));
+
         String actual = longs.toString();
         String expected = "[10572, 3685, 4879]";
         assertEquals(expected, actual);
@@ -187,6 +195,8 @@ class MyArrayListTest {
     @Test
     @DisplayName("QuickMergeSort the array")
     void quickMergeSort() {
+        MyArrayList<Double> doubles = new MyArrayList<>(Arrays.asList(1.4, 3.6, 2.7, 10.5, 2.3));
+
         doubles.quickMergeSort();
         System.out.println(doubles);
         MyArrayList<Double> actualArray = doubles;
@@ -209,17 +219,28 @@ class MyArrayListTest {
     @Test
     @DisplayName("QuickMergeSort the array with comparator")
     void QuickMergeSortWithComparator() {
+        PersonTest personTest1 = new PersonTest(160);
+        PersonTest personTest2 = new PersonTest(190);
+        PersonTest personTest3 = new PersonTest(178);
+        MyArrayList<PersonTest> persons = new MyArrayList<>(Arrays.asList(personTest1, personTest2, personTest3));
+        Comparator<PersonTest> comparatorPerson = new Comparator<PersonTest>() {
+            @Override
+            public int compare(PersonTest o1, PersonTest o2) {
+                return Double.compare(o1.getHeight(), o2.getHeight());
+            }
+        };
+
         persons.quickMergeSort(comparatorPerson);
-        MyArrayList<Person> actualArray = persons;
-        MyArrayList<Person> expectedArray = new MyArrayList<>(Arrays.asList(person1, person3, person2));
+        MyArrayList<PersonTest> actualArray = persons;
+        MyArrayList<PersonTest> expectedArray = new MyArrayList<>(Arrays.asList(personTest1, personTest3, personTest2));
         boolean areArraysEqual = true;
 
         if (actualArray.length() != expectedArray.length()) {
             areArraysEqual = false;
         } else {
             for (int i = 0; i < expectedArray.length(); i++) {
-                Person actualElement = actualArray.get(i);
-                Person expectedElement = expectedArray.get(i);
+                PersonTest actualElement = actualArray.get(i);
+                PersonTest expectedElement = expectedArray.get(i);
 
                 if (comparatorPerson.compare(actualElement, expectedElement) != 0) {
                     areArraysEqual = false;
@@ -234,6 +255,8 @@ class MyArrayListTest {
     @Test
     @DisplayName("QuickSort")
     void quickSort() {
+        MyArrayList<Integer> integers = new MyArrayList<>(Arrays.asList(4, 1, 5, 8, 6, 2, 9, 1));
+
         integers.quickSort();
         MyArrayList<Integer> actualArray = integers;
         MyArrayList<Integer> expectedArray = new MyArrayList<>(Arrays.asList(1, 1, 2, 4, 5, 6, 8, 9));
@@ -259,9 +282,14 @@ class MyArrayListTest {
     @Test
     @DisplayName("Sorting MyArrayList with objects without a working comparator")
     void quickMergeSortObject() {
+        PersonTest personTest1 = new PersonTest(160);
+        PersonTest personTest2 = new PersonTest(190);
+        PersonTest personTest3 = new PersonTest(178);
+        MyArrayList<PersonTest> persons = new MyArrayList<>(Arrays.asList(personTest1, personTest2, personTest3));
+
         persons.quickMergeSort(null);
         String actual = persons.toString();
-        String expected = "[Person{height=178.0}, Person{height=190.0}, Person{height=160.0}]";
+        String expected = "[PersonTest{height=178.0}, PersonTest{height=190.0}, PersonTest{height=160.0}]";
 
         assertEquals(expected, actual);
     }
